@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Vulkan REQUIRED)
+find_package(glfw3 CONFIG REQUIRED)
 
 add_executable(vulkan_triangle
     src/main.cpp
@@ -13,4 +14,5 @@ add_executable(vulkan_triangle
 
 target_link_libraries(vulkan_triangle PRIVATE
     Vulkan::Vulkan
+    glfw
 )

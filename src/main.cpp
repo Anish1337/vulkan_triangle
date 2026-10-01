@@ -1,11 +1,73 @@
-#include <vulkan/vulkan.h>
+#define VULKAN_HPP_NO_STRUCT_CONSTRUCTORS
 
+#if defined(__INTELLISENSE__) || !defined(USE_CPP20_MODULES)
+#include <vulkan/vulkan_raii.hpp>
+#else
+import vulkan_hpp;
+#endif
+
+#define GLFW_INCLUDE_VULKAN
+#include <GLFW/glfw3.h>
+
+#include <cstdlib>
 #include <iostream>
+#include <stdexcept>
 
-int main()
-{
-    std::cout << "Vulkan header version: "
-        << VK_HEADER_VERSION << '\n';
+constexpr uint32_t WIDTH = 800;
+constexpr uint32_t HEIGHT = 600;
 
-    return 0;
+class HelloTriangleApplication {
+public:
+    void run() {
+        initWindow();
+        initVulkan();
+        mainLoop();
+        cleanup();
+    }
+
+private:
+    GLFWwindow* window = nullptr;
+
+    void initWindow() {
+        glfwInit();
+
+        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+
+        window = glfwCreateWindow(
+            WIDTH,
+            HEIGHT,
+            "Vulkan",
+            nullptr,
+            nullptr
+        );
+    }
+
+    void initVulkan() {
+        // Vulkan setup will go here in the next section.
+    }
+
+    void mainLoop() {
+        while (!glfwWindowShouldClose(window)) {
+            glfwPollEvents();
+        }
+    }
+
+    void cleanup() {
+        glfwDestroyWindow(window);
+        glfwTerminate();
+    }
+};
+
+int main() {
+    try {
+        HelloTriangleApplication app;
+        app.run();
+    }
+    catch (const std::exception& e) {
+        std::cerr << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
 }
