@@ -1,2 +1,2 @@
 # vulkan_triangle
-learning vulkan
+Khronos vulkan triangle tutorial with extra comments
